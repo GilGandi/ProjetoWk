@@ -274,7 +274,16 @@ begin
 end;
 
 function TFrmPedidos.isPedidoExiste(vPedido:string): boolean;
+var
+  vIntTemp: Integer;
 begin
+  if not TryStrToInt(vPedido,vIntTemp) then
+  begin
+    ShowMessage('Digite um valor válido!');
+    Result := False;
+    Exit;
+  end;
+
   if dm.conexao.ExecSQLScalar('Select count(*) from pedido where nrpedido='+vPedido) = 0 then
   begin
     ShowMessage('Pedido não encontrado!');
